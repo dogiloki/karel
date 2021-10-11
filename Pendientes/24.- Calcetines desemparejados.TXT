@@ -1,0 +1,136 @@
+class Robot{
+    Robot(){
+        buscar_calcetin();
+        turnoff();
+    }
+
+    void buscar_calcetin(n){
+        inicio();
+        mover();
+        este();
+        while(notNextToABeeper){
+            if(frontIsClear){
+                move();
+            }else{
+                if(facingEast){
+                    norte();
+                    mover();
+                    oeste();
+                }else
+                if(facingWest){
+                    norte();
+                    mover();
+                    este();
+                }
+            }
+        }
+        coger_todo();
+        ir_oeste(0);
+    }
+    void ir_oeste(n){
+        if(frontIsClear){
+            mover();
+            ir_oeste(succ(n));
+        }else{
+            ir_sur(0);
+            este();
+            iterate(n){
+                mover();
+            }
+        }
+    }
+    void ir_sur(n){
+        if(frontIsClear){
+            mover();
+            ir_sur(succ(n));
+        }else{
+            posicionar_calcetin();
+            inicio();
+            norte();
+            iterate(n){
+                mover();
+            }
+        }
+    }
+    void posicionar_calcetin(){
+        este();
+        mover();
+        while(notNextToABeeper && anyBeepersInBeeperBag){
+            dejar();
+            mover();
+        }
+    }
+    void comparar_calcetines(){
+        inicio();
+        este();
+        mover();
+        while(anyBeepersInBeeperBag){
+            dejar();
+            mover();
+        }
+        if(frontIsClear){
+            if(nextToABeeper){
+                coger_calcetines();
+                impar();
+            }else{
+                coger_calcetines();
+                par();
+            }
+        }else{
+            coger_calcetines();
+            par();
+        }
+    }
+    void coger_calcetines(){
+        inicio();
+        este();
+        mover();
+        mover();
+        while(nextToABeeper){
+            coger_todo();
+            mover();
+        }
+    }
+    void par(){
+        buscar_calcetin(0);
+    }
+    void impar(){
+        inicio();
+        putbeeper();
+        este();
+        mover();
+        dejar_todo();
+    }
+    void inicio(){
+        oeste();
+        while(frontIsClear){ move(); }
+        sur();
+        while(frontIsClear){ move(); }
+        norte();
+    }
+
+    void coger_todo(){
+        while(nextToABeeper){ pickbeeper(); }
+    }
+    void dejar_todo(){
+        while(anyBeepersInBeeperBag){ putbeeper(); }
+    }
+    void dejar(){
+        if(anyBeepersInBeeperBag){ putbeeper(); }
+    }
+    void mover(){
+        if(frontIsClear){ move(); }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

@@ -1,0 +1,102 @@
+class Robot{
+    Robot(){
+        este();
+        if(leftIsClear){
+            avanzar_final(pred(0));
+        }else{
+            avanzar_final(0);
+        }
+        sur();
+        while(frontIsClear){ move(); }
+        turnoff();
+    }
+
+    void avanzar_final(n){
+        if(frontIsClear){
+            move();
+            avanzar_final(succ(n));
+        }else{
+            if(leftIsClear || rightIsClear){
+                if(leftIsClear){
+                    norte();
+                    while(frontIsClear && rightIsBlocked){ move(); }
+                }else
+                if(rightIsClear){
+                    sur();
+                    while(frontIsClear && leftIsBlocked){ move(); }
+                }
+                este();
+                if(frontIsClear){
+                    avanzar_final(succ(n));
+                }else{
+                    este();
+                    if(leftIsClear){
+                        avanzar_medio(succ(n));
+                    }else{
+                        avanzar_medio(n);
+                    }
+                }
+            }else{
+                este();
+                if(leftIsClear){
+                    avanzar_medio(n);
+                }else{
+                    avanzar_medio(n);
+                }
+            }
+        }
+    }
+    void avanzar_medio(n){
+        iterate(n){
+            oeste();
+            if(frontIsClear){
+                move();
+            }else{
+                if(leftIsClear || rightIsClear){
+                    if(rightIsClear){
+                        norte();
+                        while(frontIsClear && leftIsBlocked){ move(); }
+                    }else
+                    if(leftIsClear){
+                        sur();
+                        while(frontIsClear && rightIsBlocked){ move(); }
+                    }
+                }
+            }
+        }
+        if(!iszero(n)){
+        iterate(pred(n)){
+            este();
+            if(frontIsClear){
+                move();
+            }else{
+                if(leftIsClear || rightIsClear){
+                    if(leftIsClear){
+                        norte();
+                        while(frontIsClear && rightIsBlocked){ move(); }
+                    }else
+                    if(rightIsClear){
+                        sur();
+                        while(frontIsClear && leftIsBlocked){ move(); }
+                    }
+                }
+            }
+        }
+        if(!iszero(pred(n))){
+            avanzar_medio(pred(pred(n)));
+        }
+        }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

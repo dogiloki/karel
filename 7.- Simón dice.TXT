@@ -1,0 +1,37 @@
+class Robot{
+    Robot(){
+        while(nextToABeeper){
+            coger(0);
+        }
+    }
+
+    void moverse(n){
+        if(nextToABeeper){
+            coger(succ(n));
+        }
+        while(notFacingNorth){
+            turnleft();
+        }
+        iterate(pred(n)){
+            turnleft();
+        }
+        if(facingEast){
+            while(notFacingWest){ turnleft(); }
+        }else{
+            if(facingWest){
+                while(notFacingEast){ turnleft(); }
+            }
+        }
+        if(frontIsClear && notNextToABeeper){
+            move();
+        }
+    }
+    void coger(n){
+        if(nextToABeeper){
+            pickbeeper();
+            coger(succ(n));
+        }else{
+            moverse(n);
+        }
+    }
+}

@@ -1,0 +1,77 @@
+class Robot{
+    Robot(){
+        coger_todo(0);
+        turnoff();
+    }
+
+    void coger_todo(n){
+        if(nextToABeeper){
+            pickbeeper();
+            coger_todo(succ(n));
+        }else{
+            oeste();
+            iterate(n){
+                if(frontIsClear){ move(); }
+            }
+            iterate(4){
+                if(facingWest){
+                    dejar();
+                    iterate(n){
+                        norte();
+                        if(frontIsClear){ move(); }
+                        este();
+                        if(frontIsClear){ move(); }
+                        dejar();
+                    }
+                }else
+                if(facingEast){
+                    dejar();
+                    iterate(n){
+                        sur();
+                        if(frontIsClear){ move(); }
+                        este();
+                        if(frontIsClear){ move(); }
+                        dejar();
+                    }
+                    norte();
+                }else
+                if(facingNorth){
+                    dejar();
+                    iterate(n){
+                        sur();
+                        if(frontIsClear){ move(); }
+                        oeste();
+                        if(frontIsClear){ move(); }
+                        dejar();
+                    }
+                    sur();
+                }else
+                if(facingSouth){
+                    dejar();
+                    iterate(n){
+                        norte();
+                        if(frontIsClear){ move(); }
+                        oeste();
+                        if(frontIsClear){ move(); }
+                        dejar();
+                    }
+                }
+            }
+        }
+    }
+    void dejar(){
+        if(notNextToABeeper){ putbeeper(); }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

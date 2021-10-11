@@ -1,0 +1,145 @@
+class Robot{
+    Robot(){
+        inicio();
+        eras_geologicas(0);
+        while(nextToABeeper){
+            pickbeeper();
+        }
+        turnoff();
+    }
+
+    void eras_geologicas(n){
+        if(anyBeepersInBeeperBag){
+            putbeeper();
+            eras_geologicas(succ(n));
+        }else{
+            iterate(n){
+                buscar_erosiones();
+            }
+        }
+    }
+    void buscar_erosiones(){
+        este();
+        while(frontIsClear){
+            move();
+            if(nextToABeeper){
+                final_montana();
+                este();
+                if(frontIsClear){
+                    moverse();
+                    sur();
+                    if(notNextToABeeper){
+                        comparar_erosion(0);
+                    }else{
+                        inicio_montana();
+                        oeste();
+                        moverse();
+                        este();
+                    }
+                }
+            }
+        }
+        inicio();
+    }
+    void comparar_erosion(n){
+        if(notNextToABeeper){
+            moverse();
+            if(frontIsClear || nextToABeeper){
+                comparar_erosion(succ(n));
+            }else{
+                buscar_erosiones();
+            }
+        }else{
+            if(!iszero(pred(n))){
+                oeste();
+                moverse();
+                final_montana();
+                erocionar();
+            }else{
+                inicio_montana();
+                if(nextToABeeper){
+                    oeste();
+                    moverse();
+                }
+                este();
+            }
+        }
+    }
+    void erocionar(){
+        coger();
+        sur();
+        moverse();
+        este();
+        moverse();
+        while(anyBeepersInBeeperBag){
+            sur();
+            while(notNextToABeeper && frontIsClear){
+                moverse();
+            }
+            if(frontIsBlocked && notNextToABeeper){
+                oeste();
+                moverse();
+                final_montana();
+                norte();
+                moverse();
+                putbeeper();
+            }else{
+                sur();
+                moverse();
+                este();
+                moverse();
+                if(nextToABeeper){
+                    oeste();
+                    moverse();
+                    final_montana();
+                    norte();
+                    moverse();
+                    putbeeper();
+                }
+            }
+        }
+        inicio_montana();
+        este();
+    }
+    void inicio_montana(){
+        sur();
+        while(frontIsClear){ moverse(); }
+    }
+    void final_montana(){
+        norte();
+        while(nextToABeeper && frontIsClear){
+            moverse();
+        }
+        if(notNextToABeeper){
+            sur();
+            moverse();
+        }
+    }
+    void coger(){
+        while(nextToABeeper){ pickbeeper(); }
+    }
+    void dejar(){
+        while(notNextToABeeper && anyBeepersInBeeperBag){ putbeeper(); }
+    }
+    void moverse(){
+        if(frontIsClear){ move(); }
+    }
+    void inicio(){
+        oeste();
+        while(frontIsClear){ move(); }
+        sur();
+        while(frontIsClear){ move(); }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

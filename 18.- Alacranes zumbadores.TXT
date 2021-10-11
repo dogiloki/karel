@@ -1,0 +1,91 @@
+class Robot{
+    Robot(){
+        buscar();
+        turnoff();
+    }
+
+    void buscar(){
+        norte();
+        while(frontIsClear){
+            move();
+        }
+        if(nextToABeeper){
+            coger();
+        }else{
+            sur();
+            if(frontIsClear){ move(); }
+            este();
+            if(frontIsClear){
+                move();
+                buscar();
+            }else{
+                sur();
+            }
+        }
+    }
+    void poner_pared(){
+        sur();
+        move();
+        oeste();
+        while(rightIsClear && notFacingSouth){
+            norte();
+            if(frontIsClear){ move(); }
+            if(leftIsClear){
+                sur();
+                if(frontIsClear){ move(); }
+                putbeeper();
+                oeste();
+                if(frontIsClear){ move(); }
+            }else{
+                sur();
+                if(frontIsClear){ move(); }
+                putbeeper();
+                este();
+                while(nextToABeeper && frontIsClear){ move(); }
+                if(frontIsClear){
+                    buscar();
+                }else{
+                    sur();
+                }
+            }
+        }
+        if(notFacingSouth){
+            norte();
+            move();
+            while(rightIsClear){
+                sur();
+                if(frontIsClear){ move(); }
+                este();
+                if(frontIsClear){ move(); }
+                norte();
+                if(frontIsClear){ move(); }
+            }
+            sur();
+            if(frontIsClear){ move(); }
+            este();
+            if(frontIsClear){ move(); }
+            buscar();
+        }
+    }
+    void coger(){
+        este();
+        while(nextToABeeper){
+            while(nextToABeeper){ pickbeeper(); }
+            if(frontIsClear){ move(); }
+        }
+        while(frontIsClear){ move(); }
+        poner_pared();
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

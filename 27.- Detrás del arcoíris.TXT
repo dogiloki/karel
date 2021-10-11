@@ -1,0 +1,160 @@
+class Robot{
+    Robot(){
+        norte();
+        while(nextToABeeper){
+            if(facingNorth){
+                if(leftIsClear || rightIsClear){
+                    comparar_oeste(0);
+                    if(facingEast){
+                        comparar_este(0);
+                        if(facingWest){
+                            norte();
+                        }
+                    }
+                }
+            }else
+            if(facingSouth){
+                if(leftIsClear || rightIsClear){
+                    comparar_oeste(1);
+                    if(facingEast){
+                        comparar_este(1);
+                        if(facingWest){
+                            sur();
+                        }
+                    }
+                }
+            }else
+            if(facingWest){
+                if(leftIsClear || rightIsClear){
+                    comparar_norte(0);
+                    if(facingSouth){
+                        comparar_sur(0);
+                        if(facingNorth){
+                            oeste();
+                        }
+                    }
+                }
+            }else
+            if(facingEast){
+                if(leftIsClear || rightIsClear){
+                    comparar_norte(1);
+                    if(facingSouth){
+                        comparar_sur(1);
+                        if(facingNorth){
+                            este();
+                        }
+                    }
+                }
+            }
+            pickbeeper();
+            moverse();
+        }
+        if(frontIsClear){
+            if(facingNorth){
+                sur();
+                moverse();
+            }else
+            if(facingSouth){
+                norte();
+                moverse();
+            }else
+            if(facingEast){
+                oeste();
+                moverse();
+            }else
+            if(facingWest){
+                este();
+                moverse();
+            }
+        }
+        turnoff();
+    }
+
+    void comparar_oeste(n){
+        oeste();
+        if(frontIsClear){
+            moverse();
+            if(notNextToABeeper){
+                este();
+                moverse();
+            }else{
+                este();
+                moverse();
+                oeste();
+            }
+        }else{
+            este();
+        }
+    }
+    void comparar_este(n){
+        este();
+        if(frontIsClear){
+            moverse();
+            if(notNextToABeeper){
+                oeste();
+                moverse();
+            }else{
+                oeste();
+                moverse();
+                este();
+            }
+        }else{
+            if(iszero(n)){
+                norte();
+            }else{
+                sur();
+            }
+        }
+    }
+    void comparar_norte(n){
+        norte();
+        if(frontIsClear){
+            moverse();
+            if(notNextToABeeper){
+                sur();
+                moverse();
+            }else{
+                sur();
+                moverse();
+                norte();
+            }
+        }else{
+            sur();
+        }
+    }
+    void comparar_sur(n){
+        sur();
+        if(frontIsClear){
+            moverse();
+            if(notNextToABeeper){
+                norte();
+                moverse();
+            }else{
+                norte();
+                moverse();
+                sur();
+            }
+        }else{
+            if(iszero(n)){
+                oeste();
+            }else{
+                este();
+            }
+        }
+    }
+    void moverse(){
+        if(frontIsClear){ move(); }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

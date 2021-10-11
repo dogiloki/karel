@@ -1,0 +1,84 @@
+class Robot{
+    Robot(){
+        norte();
+        while(notFacingSouth){
+            moverse_final_coger();
+            sur();
+            moverse_final();
+            cambiar_columna();
+        }
+        if(leftIsBlocked){
+            oeste();
+        }else{
+            este();
+        }
+        while(notFacingSouth){
+            moverse_final_dejar();
+            cambiar_fila_norte();
+        }
+    }
+
+    void moverse_final(){
+        while(frontIsClear){ move(); }
+    }
+    void llegar_final(){
+        while(rightIsBlocked && frontIsClear){ move(); }
+        while(nextToABeeper){
+            move();
+        }
+    }
+    void moverse_final_coger(){
+        while(nextToABeeper && frontIsClear){ coger_todo(); move(); }
+        coger_todo();
+    }
+    void moverse_final_dejar(){
+        while(frontIsClear){ dejar_1(); move(); }
+        dejar_1();
+    }
+    void cambiar_columna(){
+        este();
+        if(frontIsClear){
+            move();
+            norte();
+        }else{
+            sur();
+        }
+    }
+    void cambiar_fila_norte(){
+        norte();
+        if(anyBeepersInBeeperBag){
+            if(frontIsClear){
+                move();
+            }
+            if(leftIsBlocked){
+                este();
+            }
+            if(rightIsBlocked){
+                oeste();
+            }
+        }else{
+            sur();
+        }
+    }
+    void coger_todo(){
+        while(nextToABeeper){ pickbeeper(); }
+    }
+    void dejar_1(){
+        if(anyBeepersInBeeperBag){ putbeeper(); }
+    }
+    void coger(){
+        while(nextToABeeper){ putbeeper(); }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

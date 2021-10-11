@@ -1,0 +1,95 @@
+class Robot{
+    Robot(){
+        posicionar();
+        while(notFacingSouth){
+            moverse();
+        }
+        turnoff();
+    }
+
+    void posicionar(){
+        oeste();
+        while(frontIsClear){
+            move();
+        }
+        sur();
+        while(frontIsClear){
+            move();
+        }
+        norte();
+    }
+    void coger_dejar(n){
+        if(nextToABeeper){
+            pickbeeper();
+            coger_dejar(succ(n));
+        }else{
+            iterate(pred(n)){
+                putbeeper();
+                turnleft();
+            }
+            putbeeper();
+            if(notFacingSouth){
+                norte();
+            }
+        }
+    }
+    void comparar(n){
+        norte();
+        if(nextToABeeper){
+            pickbeeper();
+            comparar(succ(n));
+        }else{
+            iterate(pred(n)){
+                putbeeper();
+                turnleft();
+            }
+            putbeeper();
+            if(notFacingSouth){
+                este();
+                if(frontIsClear){
+                    move();
+                }else{
+                    volver_inicio();
+                }
+            }
+        }
+    }
+    void moverse(){
+        if(notFacingSouth){
+            este();
+            if(frontIsClear || nextToABeeper){
+                if(nextToABeeper){
+                    comparar(0);
+                }else{
+                    move();
+                }
+            }else{
+                volver_inicio();
+            }
+        }
+    }
+    void volver_inicio(){
+        oeste();
+        while(frontIsClear){
+            move();
+        }
+        if(rightIsClear){
+            norte();
+            move();
+        }else{
+            sur();
+        }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

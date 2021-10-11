@@ -1,0 +1,42 @@
+class Robot{
+    Robot(){
+        while(nextToABeeper){
+            buscar_mochilas();
+            ir_principio();
+            cambiar_columna();
+        }
+        turnoff();
+    }
+
+    void buscar_mochilas(){
+        while(nextToABeeper){
+            while(nextToABeeper){
+                pickbeeper();
+            }
+            if(frontIsClear){
+                move();
+            }
+        }
+    }
+
+    void cambiar_columna(){
+        turnleft();
+        move();
+        turnleft();
+    }
+
+    void ir_principio(){
+        turnleft();
+        turnleft();
+        while(frontIsClear){
+            move();
+        }
+        dejar_mochilas();
+    }
+
+    void dejar_mochilas(){
+        while(anyBeepersInBeeperBag){
+            putbeeper();
+        }
+    }
+}

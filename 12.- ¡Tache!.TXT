@@ -1,0 +1,65 @@
+class Robot{
+    Robot(){
+        dejar_diagonal_nw();
+        dejar_diagonal_se();
+        turnoff();
+    }
+
+    void dejar_diagonal_nw(){
+        oeste();
+        while(frontIsClear){ move(); }
+        sur();
+        while(frontIsClear){ move(); }
+        norte();
+        while(frontIsClear){
+            dejar();
+            avanzar();
+            este();
+            avanzar();
+            norte();
+        }
+        dejar();
+    }
+    void dejar_diagonal_se(){
+        este();
+        while(frontIsClear){ move(); }
+        sur();
+        while(frontIsClear){ move(); }
+        norte();
+        while(frontIsClear){
+            dejar();
+            avanzar();
+            oeste();
+            avanzar();
+            norte();
+        }
+        dejar();
+    }
+    void avanzar(){
+        if(frontIsClear){
+            move();
+        }
+    }
+    void coger(){
+        if(nextToABeeper){
+            pickbeeper();
+        }
+    }
+    void dejar(){
+        if(anyBeepersInBeeperBag && notNextToABeeper){
+            putbeeper();
+        }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

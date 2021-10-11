@@ -1,0 +1,91 @@
+class Robot{
+    Robot(){
+        oeste();
+        move();
+        coger();
+        este();
+        moverse();
+        norte();
+        move();
+        while(rightIsBlocked){
+            move();
+        }
+        oeste();
+        move();
+        if(leftIsClear){
+            norte();
+            moverse();
+            sur();
+        }else{
+            if(rightIsClear){
+                sur();
+                moverse();
+                norte();
+            }else{
+
+            }
+        }
+        while(frontIsClear || facingNorth || facingSouth){
+            dejar();
+            oeste();
+            if(frontIsClear){
+                if(rightIsClear || leftIsClear){
+                    move();
+                    if(leftIsClear){
+                        norte();
+                    }else{
+                        sur();
+                    }
+                }
+            }
+        }
+        moverse();
+        norte();
+        moverse();
+        sur();
+        while(leftIsBlocked){
+            move();
+        }
+        oeste();
+        move();
+        sur();
+        moverse();
+        este();
+        moverse();
+        oeste();
+        move();
+        while(anyBeepersInBeeperBag){
+            putbeeper();
+        }
+        turnoff();
+    }
+
+    void dejar(){
+        while(notNextToABeeper){
+            if(anyBeepersInBeeperBag){
+                putbeeper();
+            }
+            if(frontIsClear){
+                move();
+            }
+        }
+    }
+    void coger(){
+        while(nextToABeeper){ pickbeeper(); }
+    }
+    void moverse(){
+        while(frontIsClear){ move(); }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingWest){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingEast){ turnleft(); }
+    }
+}

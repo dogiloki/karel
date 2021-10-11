@@ -1,0 +1,146 @@
+class Robot{
+    Robot(){
+        buscar_viga();
+        turnoff();
+    }
+
+    void buscar_viga(){
+        este();
+        if(frontIsClear){ move(); }
+        while(notNextToABeeper && frontIsClear){
+            if(frontIsClear){ move(); }
+        }
+        if(nextToABeeper){
+            comparar_viga();
+        }
+    }
+    void comparar_viga(){
+        norte();
+        while(nextToABeeper && frontIsClear){
+            if(frontIsClear){ move(); }
+        }
+        sur();
+        if(notNextToABeeper){
+            if(frontIsClear){ move(); }
+        }
+        este();
+        if(frontIsBlocked){
+            coger_ultima_viga();
+        }
+        while(frontIsClear){
+            este();
+            if(frontIsClear){ move(); }
+            if(nextToABeeper){
+                norte();
+                if(frontIsClear){
+                    if(frontIsClear){ move(); }
+                    if(nextToABeeper){
+                        sur();
+                        if(frontIsClear){ move(); }
+                        este();
+                    }else{
+                        sur();
+                        if(notNextToABeeper){
+                            if(frontIsClear){ move(); }
+                        }
+                        if(nextToABeeper){
+                            coger_viga(0);
+                        }
+                    }
+                }else{
+                    sur();
+                    if(notNextToABeeper){
+                        if(frontIsClear){ move(); }
+                    }
+                    if(nextToABeeper){
+                        coger_viga(0);
+                    }
+                }
+            }
+        }
+        oeste();
+        while(frontIsClear){
+            if(frontIsClear){ move(); }
+            sur();
+            if(rightIsClear || frontIsClear){
+                oeste();
+            }
+            if(nextToABeeper && notFacingSouth){
+                norte();
+                if(frontIsClear){
+                    move();
+                    if(nextToABeeper){
+                        sur();
+                        if(frontIsClear){ move(); }
+                        oeste();
+                    }else{
+                        sur();
+                        if(notNextToABeeper){
+                            if(frontIsClear){ move(); }
+                        }
+                        if(nextToABeeper){
+                            coger_ultima_viga();
+                        }
+                    }
+                }else{
+                    if(notNextToABeeper){
+                        if(frontIsClear){ move(); }
+                    }
+                    if(nextToABeeper){
+                        coger_ultima_viga();
+                    }
+                }
+            }
+        }
+    }
+    void coger_ultima_viga(){
+        sur();
+        while(nextToABeeper){
+            pickbeeper();
+            if(frontIsClear){ move(); }
+        }
+        inicio();
+        putbeeper();
+        este();
+        move();
+        sur();
+        buscar_viga();
+    }
+    void coger_viga(n){
+        sur();
+        if(notNextToABeeper){
+            if(frontIsClear){ move(); }
+        }
+        if(nextToABeeper){
+            pickbeeper();
+            if(frontIsClear){ move(); }
+            coger_viga(succ(n));
+        }else{
+            norte();
+            iterate(pred(n)){
+                if(frontIsClear){ move(); }
+            }
+            este();
+        }
+    }
+    void inicio(){
+        oeste();
+        while(frontIsClear){ move(); }
+        sur();
+        while(frontIsClear){ move(); }
+        oeste();
+        if(frontIsClear){ move(); }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

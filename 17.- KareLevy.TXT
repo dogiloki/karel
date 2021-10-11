@@ -1,0 +1,116 @@
+class Robot{
+    Robot(){
+        buscar_numeros(0);
+        turnoff();
+    }
+
+    void buscar_numeros(n){
+        este();
+        while(frontIsClear){
+            move();
+            if(nextToABeeper){
+                este();
+                if(frontIsClear){ move(); }
+                if(nextToABeeper){
+                    oeste();
+                    move();
+                    comparar(n);
+                }else{
+                    termino(n);
+                }
+            }
+        }
+    }
+    void comparar(n){
+        coger_todo();
+        norte();
+        crear_linea();
+        este();
+        if(frontIsClear){ move(); }
+        if(nextToABeeper){
+            coger_todo();
+            norte();
+            crear_linea();
+        }
+        norte();
+        while(nextToABeeper){ move(); }
+        oeste();
+        move();
+        if(nextToABeeper){
+            sur();
+            while(frontIsClear){ move(); }
+            norte();
+            coger_linea();
+            este();
+            move();
+            dejar_todo();
+            norte();
+            coger_linea();
+            oeste();
+            move();
+            dejar_todo();
+            este();
+            buscar_numeros(succ(n));
+        }else{
+            este();
+            move();
+            sur();
+            if(notNextToABeeper){ move(); }
+            coger_linea();
+            dejar_todo();
+            oeste();
+            move();
+            norte();
+            coger_linea();
+            dejar_todo();
+            este();
+            buscar_numeros(n);
+        }
+    }
+    void coger_todo(){
+        while(nextToABeeper){ pickbeeper(); }
+    }
+    void dejar_todo(){
+        while(anyBeepersInBeeperBag){ putbeeper(); }
+    }
+    void coger_linea(){
+        while(frontIsClear && nextToABeeper){ pickbeeper(); move(); }
+        sur();
+        while(frontIsClear){ move(); }
+    }
+    void crear_linea(){
+        while(frontIsClear && anyBeepersInBeeperBag){
+            putbeeper();
+            move();
+        }
+        sur();
+        while(frontIsClear){ move(); }
+    }
+    void termino(n){
+        oeste();
+        while(frontIsClear){ move(); }
+        if(nextToABeeper){
+            coger_todo();
+            norte();
+            move();
+            dejar_todo();
+            sur();
+            while(frontIsClear){ move(); }
+        }
+        if(!iszero(n)){
+            buscar_numeros(0);
+        }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

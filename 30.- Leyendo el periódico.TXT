@@ -1,0 +1,46 @@
+class Robot{
+    Robot(){
+        sur();
+        while(frontIsClear){ move(); }
+        oeste();
+        while(frontIsClear){ move(); }
+        norte();
+        while(leftIsBlocked){ move(); }
+        oeste();
+        while(frontIsClear){ move(); }
+        sur();
+        buscar_periodico(0);
+        este();
+        while(frontIsClear){ move(); }
+        sur();
+        while(frontIsClear){ move(); }
+        oeste();
+        while(frontIsClear){ move(); }
+        if(anyBeepersInBeeperBag){ putbeeper(); }
+        turnoff();
+    }
+    void buscar_periodico(n){
+        if(frontIsClear){
+            move();
+            buscar_periodico(succ(n));
+        }else{
+            if(nextToABeeper){ pickbeeper(); }
+            norte();
+            iterate(n){
+                if(frontIsClear){ move(); }
+            }
+        }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

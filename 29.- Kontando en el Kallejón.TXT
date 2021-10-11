@@ -1,0 +1,32 @@
+class Robot{
+    Robot(){
+        movimientos(0);
+        turnoff();
+    }
+
+    void movimientos(n){
+        if(notNextToABeeper){
+            if(frontIsClear){
+                move();
+                movimientos(succ(n));
+            }else
+            if(leftIsClear){
+                turnleft();
+                movimientos(succ(n));
+            }else
+            if(rightIsClear){
+                turnleft();
+                turnleft();
+                turnleft();
+                movimientos(succ(succ(succ(n))));
+            }
+        }else{
+            if(iszero(n)){
+                pickbeeper();
+            }else
+            iterate(pred(n)){
+                putbeeper();
+            }
+        }
+    }
+}

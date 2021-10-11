@@ -1,0 +1,20 @@
+class Robot{
+    Robot(){
+        while(!facingEast){ turnleft(); }
+        moverse(1);
+        turnoff();
+    }
+
+    void moverse(n){
+        if(frontIsClear){
+            move();
+            moverse(succ(n));
+        }else{
+            while(!facingWest){ turnleft(); }
+            while(frontIsClear){ move(); }
+            iterate(n){
+                putbeeper();
+            }
+        }
+    }
+}

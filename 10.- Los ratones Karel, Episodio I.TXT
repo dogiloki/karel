@@ -1,0 +1,35 @@
+class Robot{
+    Robot(){
+        este();
+        while(notNextToABeeper){
+            if(facingEast){
+                if(leftIsClear){ norte(); }else
+                if(rightIsClear){ sur(); }else
+                if(frontIsClear){ move(); }
+            }
+            if(facingNorth){
+                if(rightIsClear){ este(); }else
+                if(frontIsBlocked){ sur(); }
+            }else
+            if(facingSouth){
+                if(leftIsClear){ este(); }else
+                if(frontIsBlocked){ norte(); }
+            }
+            if(frontIsClear){ move(); }
+        }
+        turnoff();
+    }
+
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

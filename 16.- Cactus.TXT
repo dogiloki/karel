@@ -1,0 +1,125 @@
+class Robot{
+    Robot(){
+        inicio();
+        while(notFacingEast && rightIsBlocked){
+            buscar_cactus();
+        }
+        turnoff();
+    }
+
+    void buscar_cactus(){
+        este();
+        move();
+        while(notNextToABeeper && frontIsClear){
+            move();
+        }
+        norte();
+        while(nextToABeeper && frontIsClear){
+            move();
+            if(nextToABeeper){
+                sur();
+                move();
+                norte();
+            }else{
+                sur();
+            }
+            if(notFacingSouth){
+                move();
+                este();
+                if(frontIsClear){ move(); }
+                if(nextToABeeper){
+                    ramas_este(0);
+                }else{
+                    oeste();
+                    if(frontIsClear){ move(); move(); }
+                    if(nextToABeeper){
+                        ramas_oeste(0);
+                    }else{
+                        este();
+                        if(frontIsClear){ move(); }
+                        norte();
+                    }
+                }
+            }else{
+                fin();
+            }
+        }
+    }
+    void ramas_este(n){
+        if(nextToABeeper){
+            pickbeeper();
+            norte();
+            if(frontIsClear){ move(); }
+            if(nextToABeeper){
+                ramas_norte(n);
+            }else{
+                sur();
+                if(frontIsClear){ move(); }
+                este();
+                if(frontIsClear){ move(); }
+                ramas_este(succ(n));
+            }
+        }
+    }
+    void ramas_oeste(n){
+        if(nextToABeeper){
+            pickbeeper();
+            norte();
+            if(frontIsClear){ move(); }
+            if(nextToABeeper){
+                ramas_norte(n);
+            }else{
+                sur();
+                if(frontIsClear){ move(); }
+                oeste();
+                if(frontIsClear){ move(); }
+                ramas_oeste(succ(n));
+            }
+        }
+    }
+    void ramas_norte(n){
+        norte();
+        if(frontIsClear && notNextToABeeper){ move(); }
+        if(nextToABeeper){
+            pickbeeper();
+            ramas_norte(succ(n));
+        }else{
+            inicio();
+            iterate(n){
+                putbeeper();
+            }
+            putbeeper();
+        }
+    }
+    void inicio(){
+        oeste();
+        while(frontIsClear){ move(); }
+        sur();
+        while(frontIsClear){ move(); }
+    }
+    void fin(){
+        inicio();
+        este();
+        while(frontIsClear){ move(); }
+    }
+    void norte(){
+        while(!facingNorth){
+            turnleft();
+        }
+    }
+    void sur(){
+        while(!facingSouth){
+            turnleft();
+        }
+    }
+    void este(){
+        while(!facingEast){
+            turnleft();
+        }
+    }
+    void oeste(){
+        while(!facingWest){
+            turnleft();
+        }
+    }
+}
