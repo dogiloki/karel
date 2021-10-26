@@ -1,0 +1,85 @@
+class Robot{
+    Robot(){
+        este();
+        while(frontIsClear){ move(); }
+        norte();
+        pasar_pared(0);
+        turnoff();
+    }
+
+    void pasar_pared(n){
+        if(frontIsClear && rightIsBlocked){
+            move();
+            pasar_pared(succ(n));
+        }else{
+            if(rightIsClear){
+                este();
+                moverse();
+                while(rightIsBlocked && frontIsClear){
+                    moverse();
+                }
+            }else
+            if(leftIsClear){
+                oeste();
+                moverse();
+                while(rightIsBlocked && frontIsClear){
+                    moverse();
+                }
+            }
+            norte();
+            if(frontIsClear){
+                moverse();
+                if(leftIsBlocked || rightIsBlocked){
+                    pasar_pared(succ(n));
+                }else{
+                    este();
+                    moverse();
+                    sur();
+                    iterate(succ(n)){
+                        if(frontIsClear){
+                            moverse();
+                        }else{
+                            este();
+                            while(rightIsBlocked && frontIsClear){
+                                moverse();
+                            }
+                            moverse();
+                            sur();
+                        }
+                    }
+                    oeste();
+                    while(frontIsClear){ move(); }
+                    if(anyBeepersInBeeperBag){ putbeeper(); }
+                }
+            }else{
+                if(leftIsBlocked || rightIsBlocked){
+                    pasar_pared(succ(n));
+                }else{
+                    sur();
+                    iterate(n){
+                        moverse();
+                    }
+                    oeste();
+                    while(frontIsClear){ move(); }
+                    if(anyBeepersInBeeperBag){ putbeeper(); }
+                }
+            }
+        }
+    }
+
+    void moverse(){
+        if(frontIsClear){ move(); }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}

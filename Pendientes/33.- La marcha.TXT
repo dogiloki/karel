@@ -1,0 +1,109 @@
+class Robot{
+    Robot(){
+        norte();
+        move();
+        while(!facingEast && (nextToABeeper || frontIsClear)){
+            if(nextToABeeper){
+                coger_todo();
+                mover_oeste(0);
+                norte();
+                if(frontIsClear){
+                    move();
+                }
+                if(notNextToABeeper){
+                    sur();
+                    while(frontIsClear){
+                        move();
+                    }
+                    este();
+                    if(frontIsClear){ move(); }
+                    norte();
+                    if(frontIsClear){ move(); }
+                }
+            }else{
+                este();
+            }
+        }
+        turnoff();
+    }
+
+    void mover_oeste(n){
+        oeste();
+        if(frontIsClear){
+            move();
+            mover_oeste(succ(n));
+        }else{
+            mover_sur(0);
+            este();
+            iterate(n){
+                move();
+            }
+        }
+    }
+    void mover_sur(n){
+        sur();
+        if(frontIsClear){
+            move();
+            mover_sur(succ(n));
+        }else{
+        este();
+        move();
+        move();
+        norte();
+        comparar();
+        coger_todo();
+        if(facingWest){
+            oeste();
+            move();
+            move();
+            putbeeper();
+            este();
+            move();
+            move();
+        }else
+        if(facingSouth){
+            oeste();
+            move();
+            putbeeper();
+            este();
+            move();
+        }
+        dejar_todo();
+        oeste();
+        move();
+        move();
+        norte();
+        iterate(n){
+            move();
+        }
+        }
+    }
+    void coger_todo(){
+        while(nextToABeeper){
+            pickbeeper();
+        }
+    }
+    void dejar_todo(){
+        while(anyBeepersInBeeperBag){
+            putbeeper();
+        }
+    }
+    void comparar(){
+        while(anyBeepersInBeeperBag){
+            putbeeper();
+            turnleft();
+        }
+    }
+    void norte(){
+        while(!facingNorth){ turnleft(); }
+    }
+    void sur(){
+        while(!facingSouth){ turnleft(); }
+    }
+    void este(){
+        while(!facingEast){ turnleft(); }
+    }
+    void oeste(){
+        while(!facingWest){ turnleft(); }
+    }
+}
